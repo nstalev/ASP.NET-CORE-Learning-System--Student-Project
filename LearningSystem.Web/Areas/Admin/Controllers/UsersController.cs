@@ -80,6 +80,7 @@ namespace LearningSystem.Web.Areas.Admin.Controllers
 
             await this.userManager.AddToRoleAsync(user, role);
 
+            TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {role} role");
 
             return RedirectToAction("Details", new { id = UserId });
         }

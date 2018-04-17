@@ -43,6 +43,13 @@
         </div>
     </nav>
     <div class="container body-content">
+        @if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
+        {
+        <div class="alert alert-success alert-dismissible fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             @TempData[WebConstants.TempDataSuccessMessageKey]
+        </div>
+        }
         @RenderBody()
         <hr />
         <footer>

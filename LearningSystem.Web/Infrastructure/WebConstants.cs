@@ -7,5 +7,7 @@ namespace LearningSystem.Web.Infrastructure
         public const string TrainerRole = "Trainer";
         public const string BlogAuthorRole  = "BlogAuthor";
 
+
+        public const string TempDataSuccessMessageKey = "SuccessMessage";
     }
 }
