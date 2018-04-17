@@ -1,0 +1,79 @@
+﻿@model LearningSystem.Web.Areas.Admin.Models.AdminUserDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Details</h2>
+
+        <div>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    User Roles
+                </dt>
+                <dd>
+                    @if (Model.UserRoles.Any())
+                    {
+                        <ul>
+                            @foreach (var role in Model.UserRoles)
+                            {
+                                <li>@role</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No Roles Assigned</p>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>Add Role user @Model.UserName</h2>
+        
+        <form asp-action="AddRole">
+            <div class="row">
+                <div class="col-md-7">
+                    <input value="@Model.Id" name="UserId" type="hidden" />
+                    <select name="role" asp-items="Model.Roles" class="form-control"></select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Add Role</button>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
