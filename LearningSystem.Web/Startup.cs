@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using LearningSystem.Data;
-using LearningSystem.Data.Models;
-using LearningSystem.Web.Services;
-using LearningSystem.Web.Infrastructure.Extensions;
-
+﻿
 namespace LearningSystem.Web
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using LearningSystem.Data;
+    using LearningSystem.Data.Models;
+    using LearningSystem.Web.Services;
+    using LearningSystem.Web.Infrastructure.Extensions;
+    using LearningSystem.Services.Admin;
+    using LearningSystem.Services.Admin.Implementations;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -42,6 +41,7 @@ namespace LearningSystem.Web
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IAdminUserService, AdminUserService>();
 
             services.AddMvc();
         }
@@ -68,6 +68,11 @@ namespace LearningSystem.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+             );
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

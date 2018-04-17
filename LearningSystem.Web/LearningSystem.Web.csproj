@@ -20,6 +20,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LearningSystem.Data\LearningSystem.Data.csproj" />
+    <ProjectReference Include="..\LearningSystem.Services\LearningSystem.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
 </Project>
