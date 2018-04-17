@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using LearningSystem.Data;
 using LearningSystem.Data.Models;
 using LearningSystem.Web.Services;
+using LearningSystem.Web.Infrastructure.Extensions;
 
 namespace LearningSystem.Web
 {
@@ -48,6 +49,8 @@ namespace LearningSystem.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
