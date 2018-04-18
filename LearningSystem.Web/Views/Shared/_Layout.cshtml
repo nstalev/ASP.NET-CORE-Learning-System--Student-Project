@@ -33,10 +33,20 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
 
                     @if (User.IsInRole(WebConstants.AdministratorRole))
-    {
-                <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
 
-}
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Administration
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+                                <li><a asp-area="Admin" asp-controller="Courses" asp-action="Create">Create Course</a></li>
+                            </ul>
+                        </li>
+
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -45,10 +55,10 @@
     <div class="container body-content">
         @if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
         {
-        <div class="alert alert-success alert-dismissible fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             @TempData[WebConstants.TempDataSuccessMessageKey]
-        </div>
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @TempData[WebConstants.TempDataSuccessMessageKey]
+            </div>
         }
         @RenderBody()
         <hr />

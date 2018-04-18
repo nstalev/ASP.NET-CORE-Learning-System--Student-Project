@@ -42,6 +42,7 @@ namespace LearningSystem.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IAdminUserService, AdminUserService>();
+            services.AddTransient<IAdminCourseService, AdminCourseService>();
 
             services.AddMvc();
         }
