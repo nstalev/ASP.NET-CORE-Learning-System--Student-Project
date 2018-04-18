@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="4.0.185" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LearningSystem.Data\LearningSystem.Data.csproj" />
   </ItemGroup>
 

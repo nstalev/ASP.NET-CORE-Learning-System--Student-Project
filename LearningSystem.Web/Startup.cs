@@ -13,6 +13,10 @@ namespace LearningSystem.Web
     using LearningSystem.Web.Infrastructure.Extensions;
     using LearningSystem.Services.Admin;
     using LearningSystem.Services.Admin.Implementations;
+    using LearningSystem.Services.Html;
+    using LearningSystem.Services.Html.Implementations;
+    using LearningSystem.Services.Blog;
+    using LearningSystem.Services.Blog.Implementations;
 
     public class Startup
     {
@@ -43,6 +47,9 @@ namespace LearningSystem.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IAdminUserService, AdminUserService>();
             services.AddTransient<IAdminCourseService, AdminCourseService>();
+            services.AddTransient<IHtmlService, HtmlService>();
+            services.AddTransient<IBlogArticleService, BlogArticleService>();
+
 
             services.AddMvc();
         }

@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+
+@if (User.IsInRole(WebConstants.BlogAuthorRole))
+{
+    <a class="btn btn-primary" asp-action="Create">Publish new Article</a>
+}
+

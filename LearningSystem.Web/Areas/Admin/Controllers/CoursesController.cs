@@ -44,6 +44,7 @@ namespace LearningSystem.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddCourseFormModel courseModel)
         {
             if (!ModelState.IsValid)
@@ -59,6 +60,7 @@ namespace LearningSystem.Web.Areas.Admin.Controllers
                 courseModel.EndDate,
                 courseModel.TrainerId);
 
+            TempData.AddSuccessMessage($"Course {courseModel.Name} has been created");
 
             return RedirectToAction("Index", "Home", new { area = string.Empty });
         }
