@@ -76,5 +76,18 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
         }
 
 
+        public IActionResult Details(int id)
+        {
+            var article = this.articlesService.ById(id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View(article);
+        }
+
+
     }
 }

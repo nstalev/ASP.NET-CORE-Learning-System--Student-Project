@@ -18,6 +18,9 @@
 
     var routeValuePreviousPage = new Dictionary<string, string> { ["page"] = Model.PreviousPage.ToString() };
     var routeValueNextPage = new Dictionary<string, string> { ["page"] = Model.NextPage.ToString() };
+
+
+
 }
 
 <ul class="pagination">
@@ -40,11 +43,14 @@
         <ul class="list-group">
             @foreach (var article in Model.Articles)
             {
-
                 <li class="list-group-item">
                     <h2>
-                        <a>@article.Title</a>
+                        @{
+                            var detailRouteValue = new Dictionary<string, string> { ["id"] = article.Id.ToString() };
+                        }
+                        <a asp-action="Details" asp-all-route-data="detailRouteValue">@article.Title</a>
                     </h2>
+
                     <div align="right" class="text-info small">Published by @article.Author on @article.PublishDate.ToShortDateString()</div>
 
 

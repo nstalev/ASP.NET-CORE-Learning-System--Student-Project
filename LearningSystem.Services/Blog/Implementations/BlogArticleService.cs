@@ -34,7 +34,20 @@ namespace LearningSystem.Services.Blog.Implementations
                 .ToList();
         }
 
+        public DetailsArticleServiceModel ById(int id)
+        {
+            return this.db.Articles
+                .Where(a => a.Id == id)
+                .Select(a => new DetailsArticleServiceModel
+                {
+                     Title = a.Title,
+                     Content = a.Content,
+                     Author = a.Author.Name,
+                     PublishDate = a.PublishDate
+                })
+                .FirstOrDefault();
 
+        }
 
         public void Create(string title, string content, DateTime publishDate, string userId)
         {

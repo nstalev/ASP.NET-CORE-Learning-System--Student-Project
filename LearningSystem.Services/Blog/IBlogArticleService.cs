@@ -12,5 +12,7 @@ namespace LearningSystem.Services.Blog
         IEnumerable<ArticleListingServiceModel> AllArticles(int page);
 
         int Total();
+
+        DetailsArticleServiceModel ById(int id);
     }
 }
