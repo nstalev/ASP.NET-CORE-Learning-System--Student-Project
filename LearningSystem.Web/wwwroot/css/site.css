@@ -43,3 +43,8 @@
     pointer-events: none;
 }
 
+.home-page .img-responsive {
+    height: 200px;
+    width: 200px;
+}
+

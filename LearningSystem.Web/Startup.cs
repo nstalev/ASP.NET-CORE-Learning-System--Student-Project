@@ -17,6 +17,8 @@ namespace LearningSystem.Web
     using LearningSystem.Services.Html.Implementations;
     using LearningSystem.Services.Blog;
     using LearningSystem.Services.Blog.Implementations;
+    using LearningSystem.Services;
+    using LearningSystem.Services.Implementations;
 
     public class Startup
     {
@@ -49,6 +51,7 @@ namespace LearningSystem.Web
             services.AddTransient<IAdminCourseService, AdminCourseService>();
             services.AddTransient<IHtmlService, HtmlService>();
             services.AddTransient<IBlogArticleService, BlogArticleService>();
+            services.AddTransient<ICourseService, CourseService>();
 
 
             services.AddMvc();
