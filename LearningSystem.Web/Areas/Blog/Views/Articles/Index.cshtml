@@ -1,4 +1,4 @@
-﻿
+﻿@model ArticleListingViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,4 +10,51 @@
 {
     <a class="btn btn-primary" asp-action="Create">Publish new Article</a>
 }
+
+<hr />
+@{
+    var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
+    var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
+
+    var routeValuePreviousPage = new Dictionary<string, string> { ["page"] = Model.PreviousPage.ToString() };
+    var routeValueNextPage = new Dictionary<string, string> { ["page"] = Model.NextPage.ToString() };
+}
+
+<ul class="pagination">
+    <li class="page-item @peviousPageDisable">
+        <a class="page-link  @peviousPageDisable" asp-action="Index" asp-all-route-data="routeValuePreviousPage" tabindex="-1">Previous</a>
+    </li>
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <li class="page-item @(Model.CurrentPage == i ? "active": String.Empty)"><a class="page-link" href="Articles?page=@i">@i</a></li>
+
+
+    }
+    <li class="page-item @nextPageDisable">
+        <a class="page-link @nextPageDisable" asp-action="Index" asp-all-route-data="routeValueNextPage">Next</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            @foreach (var article in Model.Articles)
+            {
+
+                <li class="list-group-item">
+                    <h2>
+                        <a>@article.Title</a>
+                    </h2>
+                    <div align="right" class="text-info small">Published by @article.Author on @article.PublishDate.ToShortDateString()</div>
+
+
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+
+
+
 

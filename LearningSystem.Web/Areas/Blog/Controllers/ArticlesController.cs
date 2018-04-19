@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LearningSystem.Data.Models;
-using LearningSystem.Services.Blog;
-using LearningSystem.Services.Html;
-using LearningSystem.Web.Areas.Blog.Models;
-using LearningSystem.Web.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿
 
 namespace LearningSystem.Web.Areas.Blog.Controllers
 {
+    using System;
+    using LearningSystem.Data.Models;
+    using LearningSystem.Services.Blog;
+    using LearningSystem.Services.Html;
+    using LearningSystem.Web.Areas.Blog.Models;
+    using LearningSystem.Web.Infrastructure;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+
     [Authorize]
     [Area("Blog")]
     public class ArticlesController : Controller
@@ -30,9 +29,19 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            var articleListing = this.articlesService.AllArticles(page);
+
+            int TotalArticles = this.articlesService.Total();
+
+
+            return View(new ArticleListingViewModel
+            {
+                Articles = articleListing,
+                CurrentPage = page,
+                TotalArticles = TotalArticles
+            });
         }
 
 

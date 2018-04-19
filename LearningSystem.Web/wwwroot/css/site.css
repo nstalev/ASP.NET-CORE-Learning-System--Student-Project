@@ -33,3 +33,13 @@
         display: none;
     }
 }
+
+.list-group-item{
+    margin-bottom: 15px;
+    background-color: azure;
+}
+
+.pagination li.disabled a {
+    pointer-events: none;
+}
+
