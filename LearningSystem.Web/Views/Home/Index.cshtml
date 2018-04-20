@@ -14,7 +14,15 @@
         {
             <div class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">@course.Name</div>
+                    <div class="panel-heading">
+                        @{ 
+                            var routeValue = new Dictionary<string, string> { ["id"] = course.Id.ToString() };
+                        }
+                        <a asp-controller="Courses"
+                           asp-action="Details"
+                           asp-all-route-data="routeValue"
+                           >@course.Name</a>
+                    </div>
                     <div class="panel-body">
                         <img src="http://thecatapi.com/api/images/get?format=src&type=gif&guid=@(Guid.NewGuid())" class="img-responsive">
                     </div>

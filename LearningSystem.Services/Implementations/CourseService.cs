@@ -4,9 +4,10 @@ namespace LearningSystem.Services.Implementations
 {
     using System.Collections.Generic;
     using LearningSystem.Data;
-    using LearningSystem.Services.Models;
+    using LearningSystem.Services.Models.Courses;
     using System.Linq;
     using System;
+    using LearningSystem.Data.Models;
 
     public class CourseService : ICourseService
     {
@@ -33,5 +34,70 @@ namespace LearningSystem.Services.Implementations
                 })
                 .ToList();
         }
+
+        public CourseDetailsServiceModel ById(int id)
+        {
+            return this.db.Courses
+                .Where(c => c.Id == id)
+                .Select(c => new CourseDetailsServiceModel
+                {
+                    Id = c.Id,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate,
+                    Name = c.Name,
+                    Trainer = c.Trainer.Name,
+                    Students = c.Students.Count()
+
+                })
+                .FirstOrDefault();
+        }
+
+        public bool StudentIsSignedUpToCourse(string studentId, int courseId)
+        {
+            return this.db.Courses
+                .Any(c => c.Id == courseId
+                && c.Students.Any(s => s.StudentId == studentId));
+        }
+
+        public bool SignUpStudent(int courseId, string studentId)
+        {
+            var courseInfo = CourseInfo(courseId, studentId);
+
+            if (courseInfo == null 
+                || courseInfo.StartDate < DateTime.UtcNow
+                || courseInfo.StudentIsSignedUp)
+            {
+                return false;
+            }
+
+            var studentCourse = new StudentCourse
+            {
+                CourseId = courseId,
+                StudentId = studentId
+            };
+
+            this.db.Add(studentCourse);
+            this.db.SaveChanges();
+
+
+            return true;
+        }
+
+
+        private CourseSignUpServiceModel CourseInfo(int courseId, string studentId)
+            => this.db.Courses
+                    .Where(c => c.Id == courseId)
+                    .Select(c => new CourseSignUpServiceModel
+                    {
+                        StartDate = c.StartDate,
+                        StudentIsSignedUp = c.Students.Any(s => s.StudentId == studentId)
+
+                    })
+                    .FirstOrDefault();
+
+
+
+
     }
 }

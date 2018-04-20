@@ -1,5 +1,5 @@
 ﻿
-namespace LearningSystem.Services.Models
+namespace LearningSystem.Services.Models.Courses
 {
     using System;
 
