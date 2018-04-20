@@ -60,5 +60,24 @@ namespace LearningSystem.Web.Controllers
 
             return RedirectToAction(nameof(Details), new { id });
         }
+
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult SignOut(int id)
+        {
+            var studentId = this.userManager.GetUserId(User);
+
+            var succes = this.coursesService.SignOutStudent(id, studentId);
+
+            if (!succes)
+            {
+                return BadRequest();
+            }
+
+            TempData.AddSuccessMessage("You successfully signed out from this course");
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
     }
 }

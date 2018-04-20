@@ -66,7 +66,7 @@ namespace LearningSystem.Services.Implementations
 
             if (courseInfo == null 
                 || courseInfo.StartDate < DateTime.UtcNow
-                || courseInfo.StudentIsSignedUp)
+                || courseInfo.StudentIsEnrolled)
             {
                 return false;
             }
@@ -84,6 +84,28 @@ namespace LearningSystem.Services.Implementations
             return true;
         }
 
+        public bool SignOutStudent(int courseId, string studentId)
+        {
+            var courseInfo = CourseInfo(courseId, studentId);
+
+            if (courseInfo == null
+               || courseInfo.StartDate < DateTime.UtcNow
+               || !courseInfo.StudentIsEnrolled)
+            {
+                return false;
+            }
+
+            var studentCourse = this.db.Courses
+                .Where(c => c.Id == courseId)
+                .SelectMany(s => s.Students)
+                .FirstOrDefault(s => s.StudentId == studentId);
+
+            this.db.Remove(studentCourse);
+            this.db.SaveChanges();
+
+            return true;
+        }
+
 
         private CourseSignUpServiceModel CourseInfo(int courseId, string studentId)
             => this.db.Courses
@@ -91,13 +113,11 @@ namespace LearningSystem.Services.Implementations
                     .Select(c => new CourseSignUpServiceModel
                     {
                         StartDate = c.StartDate,
-                        StudentIsSignedUp = c.Students.Any(s => s.StudentId == studentId)
+                        StudentIsEnrolled = c.Students.Any(s => s.StudentId == studentId)
 
                     })
                     .FirstOrDefault();
 
-
-
-
+      
     }
 }

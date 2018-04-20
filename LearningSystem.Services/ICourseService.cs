@@ -12,5 +12,7 @@ namespace LearningSystem.Services
         bool StudentIsSignedUpToCourse(string studentId, int courseId);
 
         bool SignUpStudent(int courseId, string studentId);
+
+        bool SignOutStudent(int courseId, string studentId);
     }
 }

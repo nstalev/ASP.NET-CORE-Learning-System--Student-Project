@@ -8,6 +8,6 @@ namespace LearningSystem.Services.Models.Courses
     {
         public DateTime StartDate { get; set; }
 
-        public bool StudentIsSignedUp{ get; set; } 
+        public bool StudentIsEnrolled{ get; set; } 
     }
 }
