@@ -100,6 +100,8 @@ namespace LearningSystem.Services.Implementations
                 .SelectMany(s => s.Students)
                 .FirstOrDefault(s => s.StudentId == studentId);
 
+           // var studentCourse = this.db.Find<StudentCourse>(courseId, studentId);
+
             this.db.Remove(studentCourse);
             this.db.SaveChanges();
 

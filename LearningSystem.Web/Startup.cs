@@ -52,6 +52,7 @@ namespace LearningSystem.Web
             services.AddTransient<IHtmlService, HtmlService>();
             services.AddTransient<IBlogArticleService, BlogArticleService>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<ITrainerService, TrainerService>();
 
 
             services.AddMvc();
