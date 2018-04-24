@@ -35,5 +35,19 @@ namespace LearningSystem.Web.Controllers
 
             return View(courses);
         }
+
+        public IActionResult Students(int courseId)
+        {
+            var trainerId = this.userManager.GetUserId(User);
+
+            if (!this.trainersService.IsTrainer(courseId, trainerId))
+            {
+                return NotFound();
+            }
+
+            var students = this.trainersService.Students(courseId);
+
+            return View(students);
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace LearningSystem.Web
     using LearningSystem.Services.Blog.Implementations;
     using LearningSystem.Services;
     using LearningSystem.Services.Implementations;
+    using AutoMapper;
 
     public class Startup
     {
@@ -54,6 +55,7 @@ namespace LearningSystem.Web
             services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<ITrainerService, TrainerService>();
 
+            services.AddAutoMapper();
 
             services.AddMvc();
         }

@@ -8,6 +8,7 @@ namespace LearningSystem.Services.Implementations
     using System.Linq;
     using System;
     using LearningSystem.Data.Models;
+    using AutoMapper.QueryableExtensions;
 
     public class CourseService : ICourseService
     {
@@ -25,32 +26,17 @@ namespace LearningSystem.Services.Implementations
             return this.db.Courses
                 .OrderByDescending(c => c.Id)
                 .Where(c => c.StartDate >= DateTime.UtcNow)
-                .Select(c => new CourseListingServiceModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    StartDate = c.StartDate,
-                    EndDate = c.EndDate
-                })
+                .ProjectTo<CourseListingServiceModel>()
                 .ToList();
         }
 
         public CourseDetailsServiceModel ById(int id)
         {
-            return this.db.Courses
-                .Where(c => c.Id == id)
-                .Select(c => new CourseDetailsServiceModel
-                {
-                    Id = c.Id,
-                    Description = c.Description,
-                    StartDate = c.StartDate,
-                    EndDate = c.EndDate,
-                    Name = c.Name,
-                    Trainer = c.Trainer.Name,
-                    Students = c.Students.Count()
 
-                })
-                .FirstOrDefault();
+            return this.db.Courses
+               .Where(c => c.Id == id)
+               .ProjectTo<CourseDetailsServiceModel>()
+               .FirstOrDefault();
         }
 
         public bool StudentIsSignedUpToCourse(string studentId, int courseId)
