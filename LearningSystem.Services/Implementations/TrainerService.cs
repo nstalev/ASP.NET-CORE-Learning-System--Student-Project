@@ -3,6 +3,7 @@ namespace LearningSystem.Services.Implementations
 {
     using AutoMapper.QueryableExtensions;
     using LearningSystem.Data;
+    using LearningSystem.Data.Models;
     using LearningSystem.Services.Models.Courses;
     using LearningSystem.Services.Models.Students;
     using System;
@@ -27,6 +28,8 @@ namespace LearningSystem.Services.Implementations
                 .ToList();
         }
 
+  
+
         public bool IsTrainer(int courseId, string trainerId)
         {
             return this.db.Courses
@@ -40,6 +43,21 @@ namespace LearningSystem.Services.Implementations
                 .SelectMany(c => c.Students.Select(sc => sc.Student))
                 .ProjectTo<StudentInCourseServiceModel>(new { courseId})
                 .ToList();
+        }
+
+        public bool GradeStudent(string studentId, int courseId, Grade grade)
+        {
+            var studentCourse = this.db.Find<StudentCourse>(studentId, courseId);
+
+            if (studentCourse == null)
+            {
+                return false;
+            }
+
+            studentCourse.Grade = grade;
+            this.db.SaveChanges();
+
+            return true;
         }
     }
 }

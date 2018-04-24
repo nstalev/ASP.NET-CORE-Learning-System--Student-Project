@@ -9,6 +9,9 @@ namespace LearningSystem.Services
         IEnumerable<CourseListingServiceModel> ActiveCourses();
 
         CourseDetailsServiceModel ById(int id);
+
+        CourseListingServiceModel CourseBasicById(int courseId);
+
         bool StudentIsSignedUpToCourse(string studentId, int courseId);
 
         bool SignUpStudent(int courseId, string studentId);

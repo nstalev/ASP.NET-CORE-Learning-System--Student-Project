@@ -1,49 +1,65 @@
-﻿@model IEnumerable<StudentInCourseServiceModel>
+﻿@model StudentsInCourseViewModel
 
 @{
-    ViewData["Title"] = "Students";
+    ViewData["Title"] = $"Course {@Model.Course.Name}";
 }
 
-<h2>Students</h2>
+<h2>Students in course @Model.Course.Name</h2>
+<h3>@Model.Course.StartDate - @Model.Course.EndDate</h3>
 
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Grade)
+                Grade
+            </th>
+            <th>
+
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var student in Model.Students)
         {
             <tr>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => student.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => student.Email)
                 </td>
 
                 <td>
-                    @if (item.Grade == null)
-                    {
-                        <p>No Grade</p>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.Grade)
+                    @(student.Grade == null ? "No Grade" : student.Grade.ToString())
 
-                    }
                 </td>
+                @if (Model.Course.EndDate < DateTime.UtcNow)
+                {
+                    <td>
+                        <form method="post" asp-action="GradeStudent"
+                              asp-route-courseId="@Model.Course.Id">
+                            <input type="hidden" name="StudentId" value="@student.Id" />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <select name="Grade" class="form-control" asp-items=@(Html.GetEnumSelectList<Grade>())>Grades</select>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" value="Grade Student" class="btn btn-primary" />
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </td>
+                }
 
             </tr>
         }

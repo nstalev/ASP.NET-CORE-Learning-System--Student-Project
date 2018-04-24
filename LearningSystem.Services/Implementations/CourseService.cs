@@ -106,6 +106,12 @@ namespace LearningSystem.Services.Implementations
                     })
                     .FirstOrDefault();
 
-      
+        public CourseListingServiceModel CourseBasicById(int courseId)
+        {
+            return this.db.Courses
+                 .Where(c => c.Id == courseId)
+                 .ProjectTo<CourseListingServiceModel>()
+                 .FirstOrDefault();
+        }
     }
 }
