@@ -3,6 +3,7 @@ namespace LearningSystem.Web.Infrastructure.Mapping
 {
     using AutoMapper;
     using LearningSystem.Data.Models;
+    using LearningSystem.Services.Blog.Models;
     using LearningSystem.Services.Models.Courses;
     using LearningSystem.Services.Models.Students;
     using System.Linq;
@@ -24,6 +25,9 @@ namespace LearningSystem.Web.Infrastructure.Mapping
                     .Where(c => c.CourseId == courseId)
                     .Select(c => c.Grade)
                     .FirstOrDefault()));
+
+
+            CreateMap<Article, ArticleListingServiceModel>();
 
         }
     }

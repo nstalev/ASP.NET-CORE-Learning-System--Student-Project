@@ -12,6 +12,8 @@ namespace LearningSystem.Web.Areas.Blog.Models
 
         public int CurrentPage { get; set; }
 
+        public string Search { get; set; } 
+
         public int TotalArticles { get; set; }
 
         public int TotalPages => (int)Math.Ceiling((double)this.TotalArticles / ServiceConstants.ArticlesListingPageSize);

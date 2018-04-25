@@ -9,7 +9,7 @@ namespace LearningSystem.Services.Blog
     {
         void Create(string title, string content, DateTime publishDate, string userId);
 
-        IEnumerable<ArticleListingServiceModel> AllArticles(int page);
+        IEnumerable<ArticleListingServiceModel> AllArticles(string search, int page);
 
         int Total();
 

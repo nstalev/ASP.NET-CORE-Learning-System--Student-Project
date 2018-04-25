@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper.QueryableExtensions;
 using LearningSystem.Data;
 using LearningSystem.Data.Models;
 using LearningSystem.Services.Blog.Models;
@@ -17,20 +18,15 @@ namespace LearningSystem.Services.Blog.Implementations
             this.db = db;
         }
 
-        public IEnumerable<ArticleListingServiceModel> AllArticles(int page)
+        public IEnumerable<ArticleListingServiceModel> AllArticles(string search, int page)
         {
             return this.db.Articles
                 .OrderByDescending(a => a.PublishDate)
+                .Where(a => a.Title.ToLower().Contains(search.ToLower())
+                || a.Content.ToLower().Contains(search.ToLower()))
                 .Skip((page - 1) * ServiceConstants.ArticlesListingPageSize)
                 .Take(ServiceConstants.ArticlesListingPageSize)
-                .Select(a => new ArticleListingServiceModel
-                {
-                    Id = a.Id,
-                    Title = a.Title,
-                    Author = a.Author.Name,
-                    PublishDate = a.PublishDate
-                    
-                })
+                .ProjectTo<ArticleListingServiceModel>()
                 .ToList();
         }
 
@@ -67,5 +63,8 @@ namespace LearningSystem.Services.Blog.Implementations
         {
             return this.db.Articles.Count();
         }
+
+
+
     }
 }

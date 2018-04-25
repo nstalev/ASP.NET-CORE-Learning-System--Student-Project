@@ -19,22 +19,36 @@
     var routeValuePreviousPage = new Dictionary<string, string> { ["page"] = Model.PreviousPage.ToString() };
     var routeValueNextPage = new Dictionary<string, string> { ["page"] = Model.NextPage.ToString() };
 
-
+    var searchQuery = string.IsNullOrEmpty(Model.Search) ? string.Empty : ("Search=" + Model.Search + "&");
 
 }
 
+<form method="get">
+    <div class="row">
+        <div class="col-md-4">
+            <input name="Search" class="form-control" type="text" value="@Model.Search" />
+        </div>
+        <div class="col-md-2">
+            <input class="btn btn-primary" type="submit" value="Search" />
+
+        </div>
+
+    </div>
+</form>
+
+
 <ul class="pagination">
     <li class="page-item @peviousPageDisable">
-        <a class="page-link  @peviousPageDisable" asp-action="Index" asp-all-route-data="routeValuePreviousPage" tabindex="-1">Previous</a>
+        <a class="page-link  @peviousPageDisable" href="Articles?@(searchQuery)page=@Model.PreviousPage" tabindex="-1">Previous</a>
     </li>
     @for (int i = 1; i <= Model.TotalPages; i++)
     {
-        <li class="page-item @(Model.CurrentPage == i ? "active": String.Empty)"><a class="page-link" href="Articles?page=@i">@i</a></li>
+        <li class="page-item @(Model.CurrentPage == i ? "active": String.Empty)"><a class="page-link" href="Articles?@(searchQuery)page=@i">@i</a></li>
 
 
     }
     <li class="page-item @nextPageDisable">
-        <a class="page-link @nextPageDisable" asp-action="Index" asp-all-route-data="routeValueNextPage">Next</a>
+        <a class="page-link @nextPageDisable"  href="Articles?@(searchQuery)page=@Model.NextPage">Next</a>
     </li>
 </ul>
 

@@ -29,18 +29,24 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string search="", int page = 1)
         {
-            var articleListing = this.articlesService.AllArticles(page);
-
             int TotalArticles = this.articlesService.Total();
 
+            if (String.IsNullOrEmpty(search))
+            {
+                search = "";
+            }
+
+            var articleListing = this.articlesService.AllArticles(search, page);
 
             return View(new ArticleListingViewModel
             {
                 Articles = articleListing,
                 CurrentPage = page,
-                TotalArticles = TotalArticles
+                TotalArticles = TotalArticles,
+                Search = search
+                
             });
         }
 
