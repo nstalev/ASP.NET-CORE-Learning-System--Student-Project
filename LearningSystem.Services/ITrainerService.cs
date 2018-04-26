@@ -17,5 +17,9 @@ namespace LearningSystem.Services
 
 
         bool GradeStudent(string studentId, int courseId, Grade grade);
+
+        byte[] GetExamSubmission(int courseId, string studentid);
+
+        StudentInCourseNameServiceModel GetStudentInCourseName(int courseId, string studentid);
     }
 }

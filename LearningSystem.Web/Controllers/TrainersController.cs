@@ -90,5 +90,39 @@ namespace LearningSystem.Web.Controllers
 
             return RedirectToAction(nameof(Students), new { courseId });
         }
+
+
+        public IActionResult DownloadExam(int courseId, string studentId)
+        {
+            if (string.IsNullOrEmpty(studentId))
+            {
+                return NotFound();
+
+            }
+
+            var trainerId = this.userManager.GetUserId(User);
+
+            if (!this.trainersService.IsTrainer(courseId, trainerId))
+            {
+                return NotFound();
+            }
+
+            var examContent = this.trainersService.GetExamSubmission(courseId, studentId);
+
+            if (examContent == null)
+            {
+                return BadRequest();
+            }
+
+            var StudentInCourseName = this.trainersService.GetStudentInCourseName(courseId, studentId);
+
+            if (StudentInCourseName == null)
+            {
+                return BadRequest();
+            }
+
+            return File(examContent, "application/zip", $"{StudentInCourseName.CourseName} - {StudentInCourseName.UserName}.zip");
+                
+        }
     }
 }

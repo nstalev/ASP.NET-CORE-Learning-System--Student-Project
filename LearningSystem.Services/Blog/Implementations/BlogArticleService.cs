@@ -59,9 +59,12 @@ namespace LearningSystem.Services.Blog.Implementations
             db.SaveChanges();
         }
 
-        public int Total()
+        public int Total(string search)
         {
-            return this.db.Articles.Count();
+            return this.db.Articles
+                 .Where(a => a.Title.ToLower().Contains(search.ToLower())
+                || a.Content.ToLower().Contains(search.ToLower()))
+                .Count();
         }
 
 

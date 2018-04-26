@@ -8,7 +8,7 @@ namespace LearningSystem.Web.Models.CoursesViewModel
     {
         public CourseDetailsServiceModel Course { get; set; }
 
-        public bool IsSutentSignedUp { get; set; }
+        public bool StudentIsEnrolled { get; set; }
 
     }
 }

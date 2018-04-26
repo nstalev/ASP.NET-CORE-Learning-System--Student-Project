@@ -31,12 +31,13 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
 
         public IActionResult Index(string search="", int page = 1)
         {
-            int TotalArticles = this.articlesService.Total();
 
             if (String.IsNullOrEmpty(search))
             {
                 search = "";
             }
+
+            int TotalArticles = this.articlesService.Total(search);
 
             var articleListing = this.articlesService.AllArticles(search, page);
 

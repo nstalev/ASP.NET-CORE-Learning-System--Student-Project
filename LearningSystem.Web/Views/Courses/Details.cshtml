@@ -19,19 +19,22 @@
     <div class="col-md-6">
         @if (User.Identity.IsAuthenticated)
         {
+
+
+
             if (Model.Course.StartDate > DateTime.UtcNow)
             {
-                if (Model.IsSutentSignedUp)
+                if (Model.StudentIsEnrolled)
                 {
                     <p>You are Signed Up for this course</p>
-                     <form asp-action="SignOut" method="post" asp-route-id="@Model.Course.Id">
-                        <input type="submit" class="btn btn-warning"  value="Sign Out"/>
+                    <form asp-action="SignOut" method="post" asp-route-id="@Model.Course.Id">
+                        <input type="submit" class="btn btn-warning" value="Sign Out" />
                     </form>
                 }
                 else
                 {
                     <form asp-action="SignUp" method="post" asp-route-id="@Model.Course.Id">
-                        <input type="submit" class="btn btn-primary" value="Sign Up"/>
+                        <input type="submit" class="btn btn-primary" value="Sign Up" />
                     </form>
                 }
             }
@@ -40,13 +43,24 @@
                 <span>This course already started</span>
             }
 
+            <br />
+            if (Model.StudentIsEnrolled && Model.Course.EndDate == DateTime.UtcNow.Date)
+            {
+                <form method="post" asp-action="SubmitExam" asp-route-id="@Model.Course.Id" enctype="multipart/form-data">
+                    upload your exam (only .zip file allowed): <input type="file" name="exam" accept=".zip" />
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Upload"/>
+                </form>
+            }
+
         }
         else
         {
-                <span>To SignUp to this course, please <a asp-controller="Account" 
-                                                          asp-action="Login"
-                                                          asp-route-returnUrl="@Context.Request.Path"
-                                                          >login</a> in your account</span>
+            <span>
+                To SignUp to this course, please <a asp-controller="Account"
+                                                    asp-action="Login"
+                                                    asp-route-returnUrl="@Context.Request.Path">login</a> in your account
+            </span>
         }
 
     </div>

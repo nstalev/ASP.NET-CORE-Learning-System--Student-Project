@@ -39,7 +39,7 @@ namespace LearningSystem.Services.Implementations
                .FirstOrDefault();
         }
 
-        public bool StudentIsSignedUpToCourse(string studentId, int courseId)
+        public bool StudentIsEnrolledInCourse(string studentId, int courseId)
         {
             return this.db.Courses
                 .Any(c => c.Id == courseId
@@ -112,6 +112,24 @@ namespace LearningSystem.Services.Implementations
                  .Where(c => c.Id == courseId)
                  .ProjectTo<CourseListingServiceModel>()
                  .FirstOrDefault();
+        }
+
+
+
+        public bool SaveExamSubmission(int courseId, string studentId, byte[] fileContent)
+        {
+
+            var studentCourse = this.db.Find<StudentCourse>(studentId, courseId);
+
+            if (studentCourse == null)
+            {
+                return false;
+            }
+
+            studentCourse.ExamSubmission = fileContent;
+            this.db.SaveChanges();
+
+            return true;
         }
     }
 }

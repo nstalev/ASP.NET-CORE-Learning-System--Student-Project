@@ -57,7 +57,7 @@ namespace LearningSystem.Web.Areas.Admin.Controllers
                 courseModel.Name,
                 courseModel.Description,
                 courseModel.StartDate,
-                courseModel.EndDate,
+                courseModel.EndDate.AddDays(1),
                 courseModel.TrainerId);
 
             TempData.AddSuccessMessage($"Course {courseModel.Name} has been created");

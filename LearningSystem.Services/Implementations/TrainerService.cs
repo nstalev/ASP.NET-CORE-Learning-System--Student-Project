@@ -59,5 +59,36 @@ namespace LearningSystem.Services.Implementations
 
             return true;
         }
+
+        public byte[] GetExamSubmission(int courseId, string studentid)
+        {
+            var studentCourse = this.db.Find<StudentCourse>(studentid, courseId);
+
+            if (studentCourse == null)
+            {
+                return null;
+            }
+
+            return studentCourse.ExamSubmission;
+        }
+
+        public StudentInCourseNameServiceModel GetStudentInCourseName(int courseId, string studentid)
+        {
+            var userName = this.db.Users
+                .Where(u => u.Id == studentid)
+                .Select(s => s.UserName)
+                .FirstOrDefault();
+
+            var courseName = this.db.Courses
+                .Where(c => c.Id == courseId)
+                .Select(c => c.Name)
+                .FirstOrDefault();
+
+            return new StudentInCourseNameServiceModel
+            {
+                UserName = userName,
+                CourseName = courseName
+            };
+        }
     }
 }

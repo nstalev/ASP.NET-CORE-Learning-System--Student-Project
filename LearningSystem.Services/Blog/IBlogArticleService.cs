@@ -11,7 +11,7 @@ namespace LearningSystem.Services.Blog
 
         IEnumerable<ArticleListingServiceModel> AllArticles(string search, int page);
 
-        int Total();
+        int Total(string search);
 
         DetailsArticleServiceModel ById(int id);
     }
