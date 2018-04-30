@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Articles</h2>
 
 
 @if (User.IsInRole(WebConstants.BlogAuthorRole))
@@ -14,7 +14,7 @@
 <hr />
 @{
     var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
-    var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
+    var nextPageDisable = Model.CurrentPage >= Model.TotalPages ? "disabled" : String.Empty;
 
     var routeValuePreviousPage = new Dictionary<string, string> { ["page"] = Model.PreviousPage.ToString() };
     var routeValueNextPage = new Dictionary<string, string> { ["page"] = Model.NextPage.ToString() };
